@@ -1,0 +1,47 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 22
+    buildToolsVersion "23.0.1"
+
+    defaultConfig {
+        minSdkVersion 11
+        targetSdkVersion 22
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES.txt'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/dependencies.txt'
+        exclude 'META-INF/LGPL2.1'
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile files('src/main/java/Lib/libs/volly-1.0.11.jar')
+    compile 'com.android.support:recyclerview-v7:22.1.1'
+    compile 'jp.wasabeef:recyclerview-animators:1.2.0@aar'
+    compile 'com.android.support:appcompat-v7:22.2.1'
+    compile files('libs/gson-2.3.1.jar')
+    compile 'com.umeng.analytics:analytics:5.6.1'
+    compile files('libs/universal-image-loader-1.9.3.jar')
+    compile 'com.loopj.android:android-async-http:1.4.8'
+    compile files('libs/nineoldandroids-2.4.0.jar')
+    compile files('libs/okhttp-urlconnection-2.0.0.jar')
+    compile files('libs/okhttp-2.4.0.jar')
+}
