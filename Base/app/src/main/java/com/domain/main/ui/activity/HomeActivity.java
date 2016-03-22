@@ -2,25 +2,34 @@ package com.domain.main.ui.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.util.LruCache;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.Volley;
 import com.domain.main.R;
-import com.domain.main.app.MyApplication;
 import com.domain.main.app.Constant;
+import com.domain.main.app.MyApplication;
 import com.domain.main.model.User;
 import com.domain.main.net.GsonRequest;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
+import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
@@ -32,7 +41,6 @@ import java.util.Map;
 
 @EActivity(R.layout.activity_home)
 public class HomeActivity extends AppCompatActivity {
-
     @ViewById
     TextView tv;
 
@@ -45,14 +53,16 @@ public class HomeActivity extends AppCompatActivity {
     @ViewById
     EditText passwordtwo;
 
+    @ViewById
+    ImageView picasso_image_view;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
+    @AfterViews
+    public void initView() {
         tv.setText("Welcome to the new world!");
         password.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -64,6 +74,8 @@ public class HomeActivity extends AppCompatActivity {
                 return false;
             }
         });
+        Picasso.with(this).load("http://avatar.csdn.net/6/6/D/1_lfdfhl.jpg").into(picasso_image_view);
+
     }
 
     private void attemptLogin() {
