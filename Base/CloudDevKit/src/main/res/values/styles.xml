@@ -4,7 +4,7 @@
         Base application theme, dependent on API level. This theme is replaced
         by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
     -->
-    <style name="AppBaseTheme" parent="Theme.AppCompat.Light">
+    <style name="AppBaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!--
             Theme customizations available in newer API levels can go in
             res/values-vXX/styles.xml, while customizations related to
@@ -18,7 +18,7 @@
     </style>
 
     <style name="AppTheme.NoTitleBar" parent="@style/AppTheme">
-        <item name="android:windowNoTitle">true</item>
+        <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
     </style>
 
@@ -31,7 +31,7 @@
     <style name="DialogTime">
         <item name="android:layout_gravity">center_horizontal</item>
         <item name="android:shadowColor">#4c000000</item>
-        <item name="android:shadowDx">1.2</item>
+        <item name="android:shadowDx">1.2</item>Theme.AppCompat.Light.NoActionBar
         <item name="android:shadowDy">1.2</item>
         <item name="android:shadowRadius">1.2</item>
         <item name="android:textSize">10.0sp</item>

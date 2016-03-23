@@ -4,11 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.LruCache;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.Window;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -33,8 +35,10 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.TextChange;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
+import org.androidannotations.annotations.WindowFeature;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -42,60 +46,27 @@ import java.util.Map;
 @EActivity(R.layout.activity_home)
 public class HomeActivity extends AppCompatActivity {
     @ViewById
-    TextView tv;
+    Button btn;
 
     @ViewById
-    Button btn;
+    EditText username;
 
     @ViewById
     EditText password;
 
     @ViewById
-    EditText passwordtwo;
-
-    @ViewById
     ImageView picasso_image_view;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
+    @ViewById
+    TextInputLayout text_input_password;
+
+    @ViewById
+    TextInputLayout text_input_username;
+
 
     @AfterViews
     public void initView() {
-        tv.setText("Welcome to the new world!");
-        password.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == R.id.login || id == EditorInfo.IME_NULL) {
-                    attemptLogin();
-                    return true;
-                }
-                return false;
-            }
-        });
-        Picasso.with(this).load("http://avatar.csdn.net/6/6/D/1_lfdfhl.jpg").into(picasso_image_view);
-
-    }
-
-    private void attemptLogin() {
-        password.setError(null);
-        String mPassword = password.getText().toString();
-        boolean cancel = false;
-        View focusView = null;
-        if (!isPasswordValid(mPassword)) {
-            password.setError("请输入密码");
-            focusView = password;
-            cancel = true;
-        }
-        if (cancel) {
-            focusView.requestFocus();
-        }
-    }
-
-    private boolean isPasswordValid(String password) {
-        //TODO: Replace this with your own logic
-        return password.length() > 4;
+        Picasso.with(this).load("http://b394.photo.store.qq.com/psb?/V10IHpOG3mfnbo/uWrDO42KCowcfYDYXgtDThwwCaxDgJQT2FnQKV*ANrc!/b/dIoBAAAAAAAA&bo=IAPCASADwgEFByQ!&rf=viewer_4").into(picasso_image_view);
     }
 
     @Click
@@ -115,7 +86,6 @@ public class HomeActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(User response) {
                         Log.e("response", response.toString());
-                        updateUI();
                     }
                 }, appendHeader,
                 new Response.ErrorListener() {
@@ -128,24 +98,39 @@ public class HomeActivity extends AppCompatActivity {
         MyApplication.getInstance().getRequestQueue().add(userRequest);
     }
 
-    @UiThread
-    public void updateUI() {
-        //TODO:更新U...
-        hideKeyboard();
+    @TextChange(R.id.username)
+    void onUserChanges(CharSequence text, TextView tv, int before, int start, int count) {
+        if (text.length() > 6) {
+            text_input_username.setErrorEnabled(true);
+            text_input_username.setError("亲，只能输入6位哦！");
+            hideKeyboard();
+        } else {
+            text_input_username.setErrorEnabled(false);
+        }
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        MyApplication.getInstance().cancelPendingRequests("请求名称");
+    @TextChange(R.id.password)
+    void onPsdChanges(CharSequence text, TextView tv, int before, int start, int count) {
+        if (text.length() > 6) {
+            text_input_password.setErrorEnabled(true);
+            text_input_password.setError("亲，只能输入6位哦！");
+            hideKeyboard();
+        } else {
+            text_input_password.setErrorEnabled(false);
+        }
     }
 
-    //登陆时调用隐藏键盘
     private void hideKeyboard() {
         View view = getCurrentFocus();
         if (view != null) {
             ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).
                     hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
         }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        MyApplication.getInstance().cancelPendingRequests("请求名称");
     }
 }
