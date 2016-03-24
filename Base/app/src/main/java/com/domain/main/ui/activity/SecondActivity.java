@@ -30,7 +30,7 @@ public class SecondActivity extends AppCompatActivity {
         initDatas();
         //设置布局管理器
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
         //设置适配器
         mAdapter = new GalleryAdapter(this, mDatas);
