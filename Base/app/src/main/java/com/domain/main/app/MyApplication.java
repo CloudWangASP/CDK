@@ -7,9 +7,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.Volley;
 import com.cloud.BaseApplication;
-import com.orhanobut.hawk.Hawk;
-import com.orhanobut.hawk.HawkBuilder;
-import com.orhanobut.hawk.LogLevel;
 
 /**
  * Created by cloud_wang on 16/2/24.
@@ -31,11 +28,11 @@ public class MyApplication extends BaseApplication {
     public void onCreate() {
         super.onCreate();
         instance = this;
-        Hawk.init(this)
-                .setEncryptionMethod(HawkBuilder.EncryptionMethod.MEDIUM)
-                .setStorage(HawkBuilder.newSqliteStorage(this))
-                .setLogLevel(LogLevel.FULL)
-                .build();
+//        Hawk.init(this)
+//                .setEncryptionMethod(HawkBuilder.EncryptionMethod.MEDIUM)
+//                .setStorage(HawkBuilder.newSqliteStorage(this))
+//                .setLogLevel(LogLevel.FULL)
+//                .build();
     }
 
     /**

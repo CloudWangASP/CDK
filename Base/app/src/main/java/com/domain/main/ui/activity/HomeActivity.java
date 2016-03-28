@@ -2,46 +2,33 @@ package com.domain.main.ui.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.util.LruCache;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.Window;
-import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.domain.main.R;
-import com.domain.main.app.Constant;
 import com.domain.main.app.MyApplication;
-import com.domain.main.model.User;
-import com.domain.main.net.GsonRequest;
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.Picasso;
+import com.domain.main.net.ApiClint;
+import com.squareup.okhttp.ResponseBody;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.TextChange;
-import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
-import org.androidannotations.annotations.WindowFeature;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.io.IOException;
+
+import retrofit.Call;
+import retrofit.Callback;
+import retrofit.Retrofit;
 
 @EActivity(R.layout.activity_home)
 public class HomeActivity extends AppCompatActivity {
@@ -66,7 +53,7 @@ public class HomeActivity extends AppCompatActivity {
 
     @AfterViews
     public void initView() {
-        Picasso.with(this).load("http://b394.photo.store.qq.com/psb?/V10IHpOG3mfnbo/uWrDO42KCowcfYDYXgtDThwwCaxDgJQT2FnQKV*ANrc!/b/dIoBAAAAAAAA&bo=IAPCASADwgEFByQ!&rf=viewer_4").into(picasso_image_view);
+        Glide.with(this).load("http://b394.photo.store.qq.com/psb?/V10IHpOG3mfnbo/uWrDO42KCowcfYDYXgtDThwwCaxDgJQT2FnQKV*ANrc!/b/dIoBAAAAAAAA&bo=IAPCASADwgEFByQ!&rf=viewer_4").into(picasso_image_view);
     }
 
     @Click
@@ -79,23 +66,33 @@ public class HomeActivity extends AppCompatActivity {
 
     @Background
     public void sendRequest() {
-        Map<String, String> appendHeader = new HashMap<>();
-        appendHeader.put("phone", "18510970806");
-        GsonRequest<User> userRequest = new GsonRequest<>(Constant.HTTP_URL_POST_GETVERIFYCODE, User.class,
-                new Response.Listener<User>() {
-                    @Override
-                    public void onResponse(User response) {
-                        Log.e("response", response.toString());
-                    }
-                }, appendHeader,
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError volleyError) {
-                        Log.e("error", volleyError.toString());
-                    }
-                });
-        userRequest.setTag("请求名称");
-        MyApplication.getInstance().getRequestQueue().add(userRequest);
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://www.baidu.com/").build();//在这里可以添加 Gson转换器等;
+        ApiClint.GetBaidu getBaidu = retrofit.create(ApiClint.GetBaidu.class);//使用上面声明的接口创建
+        Call<ResponseBody> call = getBaidu.get();//获取一个Call,才可以执行请求
+
+//同步请求....
+        try {
+            retrofit.Response<ResponseBody> bodyResponse = call.execute();
+            String body = bodyResponse.body().string();//获取返回体的字符串
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+//异步请求....
+        call.enqueue(new Callback<ResponseBody>() {//异步
+            @Override
+            public void onResponse(retrofit.Response<ResponseBody> response, Retrofit retrofit) {
+                try {
+                    String body = response.body().string();//获取返回体的字符串
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+            }
+        });
     }
 
     @TextChange(R.id.username)
