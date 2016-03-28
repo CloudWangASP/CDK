@@ -7,8 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.domain.main.R;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -68,7 +68,7 @@ public class GalleryAdapter extends
     @Override
     public void onBindViewHolder(final ViewHolder viewHolder, final int i) {
 //        viewHolder.mImg.setImageResource(mDatas.get(i));
-        Picasso.with(context).load(mDatas.get(i)).into(viewHolder.mImg);
+        Glide.with(context).load(mDatas.get(i)).into(viewHolder.mImg);
 
         //如果设置了回调，则设置点击事件
         if (mOnItemClickLitener != null) {
