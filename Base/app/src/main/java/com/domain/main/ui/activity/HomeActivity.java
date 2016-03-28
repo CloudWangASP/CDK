@@ -124,10 +124,4 @@ public class HomeActivity extends AppCompatActivity {
                     hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
         }
     }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        MyApplication.getInstance().cancelPendingRequests("请求名称");
-    }
 }
