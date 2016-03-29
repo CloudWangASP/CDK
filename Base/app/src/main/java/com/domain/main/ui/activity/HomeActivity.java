@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.cloud.BaseActivity;
 import com.domain.main.R;
 import com.domain.main.app.MyApplication;
 import com.domain.main.net.ApiClint;
@@ -31,7 +32,7 @@ import retrofit.Callback;
 import retrofit.Retrofit;
 
 @EActivity(R.layout.activity_home)
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends BaseActivity {
     @ViewById
     Button btn;
 

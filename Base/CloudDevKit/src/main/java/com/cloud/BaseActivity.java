@@ -3,21 +3,19 @@ package com.cloud;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuItem;
 
 import com.cloud.util.LoadingView;
 import com.google.gson.Gson;
 import com.umeng.analytics.MobclickAgent;
 import com.ypy.eventbus.EventBus;
 
+import org.androidannotations.annotations.EActivity;
+
 import java.util.List;
 
-
+@EActivity
 public abstract class BaseActivity extends AppCompatActivity {
     public BaseApplication mApp;
     public Gson gson;
@@ -26,37 +24,9 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_base);
         mApp = (BaseApplication) getApplication();
         gson = mApp.getGson();
-
-//        initStart();
-//
-//        initLayout();
-//
-//        init();
-//
-//        initViewsListener();
     }
-
-//    protected void initStart() {
-//
-//    }
-//
-//    /**
-//     * 初始化View
-//     */
-//    protected abstract void initLayout();
-//
-//    /**
-//     * 初始化数据
-//     */
-//    protected abstract void init();
-//
-//    /**
-//     * 初始化监听
-//     */
-//    protected abstract void initViewsListener();
 
     /**
      * 跳转指定Activity

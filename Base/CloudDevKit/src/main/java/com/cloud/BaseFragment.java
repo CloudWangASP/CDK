@@ -8,7 +8,9 @@ import com.cloud.util.LoadingView;
 import com.google.gson.Gson;
 import com.ypy.eventbus.EventBus;
 
+import org.androidannotations.annotations.EFragment;
 
+@EFragment
 public abstract class BaseFragment extends Fragment {
 
     public BaseApplication mApp;
@@ -22,29 +24,7 @@ public abstract class BaseFragment extends Fragment {
 
         mApp = (BaseApplication) getActivity().getApplication();
         gson = mApp.getGson();
-
-        initLayout();
-
-        init();
-
-        initViewsListener();
     }
-
-    /**
-     * 初始化View
-     */
-    protected abstract void initLayout();
-
-    /**
-     * 初始化数据
-     */
-    protected abstract void init();
-
-
-    /**
-     * 初始化监听
-     */
-    protected abstract void initViewsListener();
 
     public LoadingView getLoadingView() {
         if (mLoadingView == null) {
@@ -65,10 +45,10 @@ public abstract class BaseFragment extends Fragment {
     /**
      * 带参跳转指定Activity
      */
-    public void forwardActivity(Class<?> cls,String bundleName,Bundle bundle) {
+    public void forwardActivity(Class<?> cls, String bundleName, Bundle bundle) {
         Intent intent = new Intent();
         intent.setClass(getActivity(), cls);
-        intent.putExtra(bundleName,bundle);
+        intent.putExtra(bundleName, bundle);
         startActivity(intent);
     }
 
