@@ -27,6 +27,7 @@ import java.io.IOException;
 
 import retrofit.Call;
 import retrofit.Callback;
+import retrofit.GsonConverterFactory;
 import retrofit.Retrofit;
 
 @EActivity(R.layout.activity_home)
@@ -65,24 +66,17 @@ public class HomeActivity extends BaseActivity {
 
     @Background
     public void sendRequest() {
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://www.baidu.com/").build();
-        ApiClint.GetBaidu getBaidu = retrofit.create(ApiClint.GetBaidu.class);//使用上面声明的接口创建
-        Call<ResponseBody> call = getBaidu.get();//获取一个Call,才可以执行请求
-
-//同步请求....
-        try {
-            retrofit.Response<ResponseBody> bodyResponse = call.execute();
-            String body = bodyResponse.body().string();//获取返回体的字符串
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-//异步请求....
-        call.enqueue(new Callback<ResponseBody>() {//异步
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://www.baidu.com/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        ApiClint.GetBaidu getBaidu = retrofit.create(ApiClint.GetBaidu.class);
+        Call<ResponseBody> call = getBaidu.get();
+        call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(retrofit.Response<ResponseBody> response, Retrofit retrofit) {
                 try {
-                    String body = response.body().string();//获取返回体的字符串
+                    String body = response.body().string();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

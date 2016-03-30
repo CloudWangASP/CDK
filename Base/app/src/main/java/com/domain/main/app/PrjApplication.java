@@ -5,9 +5,9 @@ import android.content.Context;
 import com.cloud.BaseApplication;
 
 /**
- * Created by cloud_wang on 16/2/24.
+ * Created by cloud_wang on 16/3/30.
  */
-public class MyApplication extends BaseApplication {
+public class PrjApplication extends BaseApplication {
     private static Context context;
 
     @Override
