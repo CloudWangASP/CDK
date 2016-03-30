@@ -14,6 +14,9 @@ import com.bumptech.glide.Glide;
 import com.cloud.BaseActivity;
 import com.domain.main.R;
 import com.domain.main.net.ApiClint;
+import com.squareup.okhttp.FormEncodingBuilder;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
 import com.squareup.okhttp.ResponseBody;
 
 import org.androidannotations.annotations.AfterViews;
@@ -28,6 +31,7 @@ import java.io.IOException;
 import retrofit.Call;
 import retrofit.Callback;
 import retrofit.GsonConverterFactory;
+import retrofit.Response;
 import retrofit.Retrofit;
 
 @EActivity(R.layout.activity_home)
@@ -59,9 +63,8 @@ public class HomeActivity extends BaseActivity {
     @Click
     void btn() {
 //        sendRequest();
-        Intent intent = new Intent();
-        intent.setClass(this, SecondActivity_.class);
-        startActivity(intent);
+        postRequest();
+//        forwardActivity(SecondActivity_.class);
     }
 
     @Background
@@ -97,6 +100,25 @@ public class HomeActivity extends BaseActivity {
         } else {
             text_input_username.setErrorEnabled(false);
         }
+    }
+
+    private void postRequest() {
+        FormEncodingBuilder builder = new FormEncodingBuilder();
+        builder.add("page", "1");
+        Request request = new Request.Builder().url(" http://apis.baidu.com/showapi_open_bus/showapi_joke/joke_text")
+                .addHeader("apikey", "ffac023cd51e5d0430d6ceaecf623c2e")
+                .post(builder.build()).build();
+        new OkHttpClient().newCall(request).enqueue(new com.squareup.okhttp.Callback() {
+            @Override
+            public void onResponse(com.squareup.okhttp.Response response) throws IOException {
+                String ssss = response.body().string();
+            }
+
+            @Override
+            public void onFailure(Request request, IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     @TextChange(R.id.password)
