@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
 import com.cloud.util.LoadingView;
-import com.google.gson.Gson;
 import com.ypy.eventbus.EventBus;
 
 import org.androidannotations.annotations.EFragment;
@@ -14,7 +13,6 @@ import org.androidannotations.annotations.EFragment;
 public abstract class BaseFragment extends Fragment {
 
     public BaseApplication mApp;
-    public Gson gson;
 
     private LoadingView mLoadingView;
 
@@ -23,7 +21,6 @@ public abstract class BaseFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         mApp = (BaseApplication) getActivity().getApplication();
-        gson = mApp.getGson();
     }
 
     public LoadingView getLoadingView() {

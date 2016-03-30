@@ -3,7 +3,6 @@ package com.domain.main.ui.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.TextInputLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -14,7 +13,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.cloud.BaseActivity;
 import com.domain.main.R;
-import com.domain.main.app.MyApplication;
 import com.domain.main.net.ApiClint;
 import com.squareup.okhttp.ResponseBody;
 
@@ -67,7 +65,7 @@ public class HomeActivity extends BaseActivity {
 
     @Background
     public void sendRequest() {
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://www.baidu.com/").build();//在这里可以添加 Gson转换器等;
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://www.baidu.com/").build();
         ApiClint.GetBaidu getBaidu = retrofit.create(ApiClint.GetBaidu.class);//使用上面声明的接口创建
         Call<ResponseBody> call = getBaidu.get();//获取一个Call,才可以执行请求
 

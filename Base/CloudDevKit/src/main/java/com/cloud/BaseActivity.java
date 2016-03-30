@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.cloud.util.LoadingView;
-import com.google.gson.Gson;
 import com.umeng.analytics.MobclickAgent;
 import com.ypy.eventbus.EventBus;
 
@@ -18,14 +17,12 @@ import java.util.List;
 @EActivity
 public abstract class BaseActivity extends AppCompatActivity {
     public BaseApplication mApp;
-    public Gson gson;
     private LoadingView mLoadingView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mApp = (BaseApplication) getApplication();
-        gson = mApp.getGson();
     }
 
     /**

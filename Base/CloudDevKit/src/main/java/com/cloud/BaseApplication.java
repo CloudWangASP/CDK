@@ -9,14 +9,10 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 import com.cloud.util.Logger;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 public class BaseApplication extends Application {
 
     private static BaseApplication mBaseApplication;
-    private Gson gson;
-    private String mAppChannel = "chio2o";
 
     protected boolean isAppActive = false;
 
@@ -28,26 +24,8 @@ public class BaseApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
         mBaseApplication = this;
-        gson = new GsonBuilder().create();
 
-        //取得渠道的标识
-        try {
-            ApplicationInfo appInfo = getPackageManager().getApplicationInfo(getPackageName(), PackageManager.GET_META_DATA);
-            mAppChannel = appInfo.metaData.getString("APP_CHANNEL");
-        } catch (NameNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public String getAppChannel() {
-        return mAppChannel;
-    }
-
-
-    public Gson getGson() {
-        return gson;
     }
 
     public boolean isNetworkAvailable() {
