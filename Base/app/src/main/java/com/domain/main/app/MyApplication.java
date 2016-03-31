@@ -10,7 +10,7 @@ import com.orhanobut.hawk.LogLevel;
 /**
  * Created by cloud_wang on 16/3/30.
  */
-public class PrjApplication extends BaseApplication {
+public class MyApplication extends BaseApplication {
     private static Context context;
 
     @Override

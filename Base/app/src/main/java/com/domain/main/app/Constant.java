@@ -8,6 +8,10 @@ package com.domain.main.app;
 public class Constant {
 
     /**
+     * 返回结果 bytes转换String失败
+     */
+    public static String APP_TITLE_BLACK = "";
+    /**
      * 接口域名前缀标志
      */
     public static String HTTP_URL_BASE = "http://testopen.xiaoeguanfan.com/";
@@ -37,7 +41,6 @@ public class Constant {
     /**
      * 获取验证码
      */
-    public static String HTTP_URL_POST_GETVERIFYCODE = HTTP_URL_BASE
-            + "openUser/genVerifyCode";
+    public static String HTTP_URL_TEST = "http://apis.baidu.com/showapi_open_bus/showapi_joke/joke_text";
 
 }
